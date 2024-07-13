@@ -1,0 +1,60 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the dataset
+df = pd.read_csv('data.csv')
+
+# Summary statistics
+print(df.describe())
+
+# Data types and missing values
+print(df.info())
+print(df.isnull().sum())
+
+# Visualize the distribution of a single variable
+plt.hist(df['column_name'], bins=50)
+plt.title('Distribution of Column Name')
+plt.xlabel('Value')
+plt.ylabel('Frequency')
+plt.show()
+
+# Visualize the relationship between two variables
+sns.scatterplot(x='column_name1', y='column_name2', data=df)
+plt.title('Relationship between Column Name 1 and Column Name 2')
+plt.xlabel('Column Name 1')
+plt.ylabel('Column Name 2')
+plt.show()
+
+# Visualize the distribution of multiple variables
+sns.boxplot(data=df[['column_name1', 'column_name2', 'column_name3']])
+plt.title('Distribution of Multiple Columns')
+plt.xlabel('Column Name')
+plt.ylabel('Value')
+plt.show()
+
+# Identify outliers using the Z-score method
+from scipy import stats
+z_scores = np.abs(stats.zscore(df['column_name']))
+print(np.where(z_scores > 3))
+
+# Correlation matrix
+corr_matrix = df.corr()
+print(corr_matrix)
+
+# Heatmap of the correlation matrix
+sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', square=True)
+plt.title('Correlation Matrix')
+plt.xlabel('Column Name')
+plt.ylabel('Column Name')
+plt.show()
+
+# Identify missing values and handle them
+df.fillna(df.mean(), inplace=True)
+
+# Check for duplicates
+duplicates = df.duplicated().sum()
+print(f'Duplicates: {duplicates}')
+
+# Remove duplicates
+df.drop_duplicates(inplace=True)
